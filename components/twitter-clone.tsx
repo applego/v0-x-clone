@@ -1,11 +1,22 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import { Textarea } from "@/components/ui/textarea"
-import { Home, Search, Bell, Mail, User, MoreHorizontal, MessageCircle, Repeat2, Heart, Share } from 'lucide-react'
+import { useState } from "react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Home,
+  Search,
+  Bell,
+  Mail,
+  User,
+  MoreHorizontal,
+  MessageCircle,
+  Repeat2,
+  Heart,
+  Share,
+} from "lucide-react";
 
 function Header() {
   return (
@@ -16,52 +27,72 @@ function Header() {
         <AvatarFallback>U</AvatarFallback>
       </Avatar>
     </header>
-  )
+  );
 }
 
 function Sidebar() {
   return (
     <nav className="flex flex-col space-y-4 p-4">
-      <Button variant="ghost" className="justify-start"><Home className="mr-2" />Home</Button>
-      <Button variant="ghost" className="justify-start"><Search className="mr-2" />Explore</Button>
-      <Button variant="ghost" className="justify-start"><Bell className="mr-2" />Notifications</Button>
-      <Button variant="ghost" className="justify-start"><Mail className="mr-2" />Messages</Button>
-      <Button variant="ghost" className="justify-start"><User className="mr-2" />Profile</Button>
-      <Button variant="ghost" className="justify-start"><MoreHorizontal className="mr-2" />More</Button>
+      <Button variant="ghost" className="justify-start">
+        <Home className="mr-2" />
+        Home
+      </Button>
+      <Button variant="ghost" className="justify-start">
+        <Search className="mr-2" />
+        Explore
+      </Button>
+      <Button variant="ghost" className="justify-start">
+        <Bell className="mr-2" />
+        Notifications
+      </Button>
+      <Button variant="ghost" className="justify-start">
+        <Mail className="mr-2" />
+        Messages
+      </Button>
+      <Button variant="ghost" className="justify-start">
+        <User className="mr-2" />
+        Profile
+      </Button>
+      <Button variant="ghost" className="justify-start">
+        <MoreHorizontal className="mr-2" />
+        More
+      </Button>
       <Button className="w-full">Tweet</Button>
     </nav>
-  )
+  );
 }
 
 function TweetComposer({ onTweet }) {
-  const [tweetContent, setTweetContent] = useState('')
+  const [tweetContent, setTweetContent] = useState("");
 
   const handleTweet = () => {
     if (tweetContent.trim()) {
-      onTweet(tweetContent)
-      setTweetContent('')
+      onTweet(tweetContent);
+      setTweetContent("");
     }
-  }
+  };
 
   return (
-    <Card className="p-4 mb-4">
-      <div className="flex space-x-4">
-        <Avatar>
-          <AvatarImage src="/placeholder.svg?height=48&width=48" alt="User" />
-          <AvatarFallback>U</AvatarFallback>
-        </Avatar>
-        <div className="flex-grow">
-          <Textarea
-            placeholder="What's happening?"
-            value={tweetContent}
-            onChange={(e) => setTweetContent(e.target.value)}
-            className="mb-2"
-          />
-          <Button onClick={handleTweet}>Tweet</Button>
+    <form role="form" className="p-4 mb-4" onSubmit={handleTweet}>
+      <Card className="p-4 mb-4">
+        <div className="flex space-x-4">
+          <Avatar>
+            <AvatarImage src="/placeholder.svg?height=48&width=48" alt="User" />
+            <AvatarFallback>U</AvatarFallback>
+          </Avatar>
+          <div className="flex-grow">
+            <Textarea
+              placeholder="What's happening?"
+              value={tweetContent}
+              onChange={(e) => setTweetContent(e.target.value)}
+              className="mb-2"
+            />
+            <Button onClick={handleTweet}>Tweet</Button>
+          </div>
         </div>
-      </div>
-    </Card>
-  )
+      </Card>
+    </form>
+  );
 }
 
 function Tweet({ content, username, handle }) {
@@ -69,32 +100,55 @@ function Tweet({ content, username, handle }) {
     <Card className="p-4 mb-4">
       <div className="flex space-x-4">
         <Avatar>
-          <AvatarImage src="/placeholder.svg?height=48&width=48" alt={username || 'User'} />
-          <AvatarFallback>{username ? username[0].toUpperCase() : 'U'}</AvatarFallback>
+          <AvatarImage
+            src="/placeholder.svg?height=48&width=48"
+            alt={username || "User"}
+          />
+          <AvatarFallback>
+            {username ? username[0].toUpperCase() : "U"}
+          </AvatarFallback>
         </Avatar>
         <div>
           <div className="flex items-center space-x-2">
-            <span className="font-bold">{username || 'Anonymous'}</span>
-            <span className="text-gray-500">@{handle || 'anonymous'}</span>
+            <span className="font-bold">{username || "Anonymous"}</span>
+            <span className="text-gray-500">@{handle || "anonymous"}</span>
           </div>
           <p className="mt-1">{content}</p>
           <div className="flex justify-between mt-4 text-gray-500">
-            <Button variant="ghost" size="sm"><MessageCircle size={18} /></Button>
-            <Button variant="ghost" size="sm"><Repeat2 size={18} /></Button>
-            <Button variant="ghost" size="sm"><Heart size={18} /></Button>
-            <Button variant="ghost" size="sm"><Share size={18} /></Button>
+            <Button variant="ghost" size="sm">
+              <MessageCircle size={18} />
+            </Button>
+            <Button variant="ghost" size="sm">
+              <Repeat2 size={18} />
+            </Button>
+            <Button variant="ghost" size="sm">
+              <Heart size={18} />
+            </Button>
+            <Button variant="ghost" size="sm">
+              <Share size={18} />
+            </Button>
           </div>
         </div>
       </div>
     </Card>
-  )
+  );
 }
 
 export function TwitterCloneComponent() {
   const [tweets, setTweets] = useState([
-    { id: 1, content: "Just setting up my Twitter clone!", username: "John Doe", handle: "johndoe" },
-    { id: 2, content: "React and Next.js are awesome!", username: "Jane Smith", handle: "janesmith" },
-  ])
+    {
+      id: 1,
+      content: "Just setting up my Twitter clone!",
+      username: "John Doe",
+      handle: "johndoe",
+    },
+    {
+      id: 2,
+      content: "React and Next.js are awesome!",
+      username: "Jane Smith",
+      handle: "janesmith",
+    },
+  ]);
 
   const handleNewTweet = (content) => {
     const newTweet = {
@@ -102,9 +156,9 @@ export function TwitterCloneComponent() {
       content,
       username: "Current User",
       handle: "currentuser",
-    }
-    setTweets([newTweet, ...tweets])
-  }
+    };
+    setTweets([newTweet, ...tweets]);
+  };
 
   return (
     <div className="flex min-h-screen bg-gray-100">
@@ -121,5 +175,5 @@ export function TwitterCloneComponent() {
         </div>
       </main>
     </div>
-  )
+  );
 }
